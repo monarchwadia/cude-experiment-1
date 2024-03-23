@@ -7,10 +7,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 include(CheckLanguage)
 check_language(CUDA)
 
-# find_package(SDL2 REQUIRED)
+find_package(SDL2 REQUIRED)
 
 # Set the output directory for executables
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 enable_language(CUDA)
 add_executable(main main.cpp gpu.cu)
+
+# Link SDL2
+target_link_libraries(main ${SDL2_LIBRARIES})
