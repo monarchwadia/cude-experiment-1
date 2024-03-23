@@ -3,7 +3,8 @@
 
 #include <iostream>
 #include <SDL2/SDL.h>
-#include "view.cpp"
+#include "game-view.cpp"
+#include "models/game-board.cpp"
 
 // Constants
 #define GRID_HEIGHT 2
@@ -13,18 +14,18 @@ class Game
 {
 
 public:
-    float board[GRID_HEIGHT][GRID_WIDTH] = {};
-    SdlApp *app;
+    GameBoard *board = new GameBoard(GRID_HEIGHT, GRID_WIDTH);
+    GameView *app;
 
 public:
-    Game(SdlApp *_app)
+    Game(GameView *_app)
     {
         app = _app;
         for (int row = 0; row < GRID_HEIGHT; row++)
         {
             for (int col = 0; col < GRID_WIDTH; col++)
             {
-                board[row][col] = (float)(row + col);
+                board->grid[row][col] = (float)(row + col);
             }
         }
     }
@@ -36,13 +37,13 @@ public:
         {
             for (int col = 0; col < GRID_WIDTH; col++)
             {
-                if (board[row][col] >= 1.0)
+                if (board->grid[row][col] >= 1.0)
                 {
-                    board[row][col] = 0.0;
+                    board->grid[row][col] = 0.0;
                 }
                 else
                 {
-                    board[row][col] += 0.001;
+                    board->grid[row][col] += 0.001;
                 }
             }
         }
@@ -70,7 +71,7 @@ public:
             }
 
             update();
-            app->render((float *)board, GRID_HEIGHT, GRID_WIDTH);
+            app->render(board);
 
             frame_time = SDL_GetTicks() - frame_start;
             if (frame_time < target_frame_time)

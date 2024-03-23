@@ -3,10 +3,11 @@
 
 #include <iostream>
 #include <SDL2/SDL.h>
+#include "models/game-board.cpp"
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
 
-class SdlApp
+class GameView
 {
 private:
     SDL_Window *window;
@@ -14,8 +15,8 @@ private:
     bool isInitialized = false;
 
 public:
-    SdlApp() = default;
-    ~SdlApp()
+    GameView() = default;
+    ~GameView()
     {
         // cleanup
         if (renderer)
@@ -61,7 +62,7 @@ public:
         return 1;
     }
 
-    bool render(float *grid, int grid_height, int grid_width)
+    bool render(GameBoard *board)
     {
         if (!isInitialized)
         {
@@ -72,11 +73,11 @@ public:
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer);
 
-        for (int row = 0; row < grid_height; row++)
+        for (int row = 0; row < board->height; row++)
         {
-            for (int col = 0; col < grid_width; col++)
+            for (int col = 0; col < board->width; col++)
             {
-                float value = grid[row * grid_width + col];
+                float value = board->grid[row][col];
                 SDL_Rect rect = {col * 10, row * 10, 10, 10};
                 SDL_SetRenderDrawColor(renderer, 255 * value, 255 * value, 255 * value, 255);
                 SDL_RenderFillRect(renderer, &rect);

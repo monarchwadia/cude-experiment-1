@@ -4,15 +4,15 @@
 #include <iostream>
 #include <stdio.h>
 #include "gpu.cuh"
-#include "view.cpp"
-#include "game.cpp"
+#include "game-view.cpp"
+#include "game-manager.cpp"
 
 int main()
 {
     calculate();
 
     // game render
-    SdlApp app = SdlApp();
+    GameView app = GameView();
     app.init();
     Game game = Game(&app);
     game.loop();
