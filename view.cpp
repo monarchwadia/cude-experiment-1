@@ -61,7 +61,7 @@ public:
         return 1;
     }
 
-    bool render()
+    bool render(float *grid, int grid_height, int grid_width)
     {
         if (!isInitialized)
         {
@@ -72,9 +72,20 @@ public:
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer);
 
-        SDL_Rect rect = {100, 100, 200, 150};
-        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-        SDL_RenderFillRect(renderer, &rect);
+        for (int row = 0; row < grid_height; row++)
+        {
+            for (int col = 0; col < grid_width; col++)
+            {
+                float value = grid[row * grid_width + col];
+                SDL_Rect rect = {col * 10, row * 10, 10, 10};
+                SDL_SetRenderDrawColor(renderer, 255 * value, 255 * value, 255 * value, 255);
+                SDL_RenderFillRect(renderer, &rect);
+            }
+        }
+
+        // SDL_Rect rect = {100, 100, 200, 150};
+        // SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+        // SDL_RenderFillRect(renderer, &rect);
 
         SDL_RenderPresent(renderer);
 
