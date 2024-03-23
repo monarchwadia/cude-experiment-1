@@ -1,17 +1,10 @@
+#ifndef VIEW_H
+#define VIEW_H 1
+
 #include <iostream>
 #include <SDL2/SDL.h>
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
-
-typedef struct
-{
-    SDL_Renderer *renderer;
-    SDL_Window *window;
-} App;
-
-int render()
-{
-}
 
 class SdlApp
 {
@@ -64,6 +57,8 @@ public:
         }
 
         isInitialized = true;
+
+        return 1;
     }
 
     bool render()
@@ -82,5 +77,9 @@ public:
         SDL_RenderFillRect(renderer, &rect);
 
         SDL_RenderPresent(renderer);
+
+        return 1;
     }
 };
+
+#endif
