@@ -16,3 +16,11 @@ To run
 ```
 bin/make
 ```
+
+# Commands
+
+Delete cache, rebuild, and run
+
+```
+rm CMakeCache.txt && cmake . && make && ./bin/main
+```
