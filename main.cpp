@@ -14,7 +14,7 @@ int main()
     // game render
     GameView app = GameView();
     app.init();
-    Game game = Game(&app);
+    GameManager game = GameManager(&app);
     game.loop();
 }
 

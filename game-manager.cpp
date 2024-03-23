@@ -10,7 +10,7 @@
 #define GRID_HEIGHT 2
 #define GRID_WIDTH 2
 
-class Game
+class GameManager
 {
 
 public:
@@ -18,7 +18,7 @@ public:
     GameView *app;
 
 public:
-    Game(GameView *_app)
+    GameManager(GameView *_app)
     {
         app = _app;
         for (int row = 0; row < GRID_HEIGHT; row++)
@@ -29,7 +29,7 @@ public:
             }
         }
     }
-    ~Game() = default;
+    ~GameManager() = default;
 
     int update()
     {
