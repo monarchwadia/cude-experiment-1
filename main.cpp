@@ -7,6 +7,7 @@
 #include "game-view.cpp"
 #include "game-manager.cpp"
 #include "logic/game_of_life.cpp"
+#include "logic/falling_sand.cpp"
 
 int main()
 {
@@ -16,8 +17,18 @@ int main()
     GameView gameView = GameView();
     gameView.init();
 
-    GameOfLifeLogic logic = GameOfLifeLogic();
+    // GameOfLifeLogic logic = GameOfLifeLogic();
+    FallingSandLogic logic = FallingSandLogic();
     GameBoard gameBoard = GameBoard(GRID_HEIGHT, GRID_WIDTH);
+
+    // randomize the board with either 0.0f or 1.0f
+    for (int i = 0; i < gameBoard.height; i++)
+    {
+        for (int j = 0; j < gameBoard.width; j++)
+        {
+            gameBoard.grid[i][j] = (float)(rand() % 2);
+        }
+    }
 
     // glider pattern on gameboard
     // output the 3 topleft cells 0,0 0,1 and  1,0
