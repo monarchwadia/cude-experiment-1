@@ -15,5 +15,11 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 enable_language(CUDA)
 add_executable(main main.cpp gpu.cu)
 
+# ImgUI
+set(IMGUI_PATH ${CMAKE_SOURCE_DIR}/imgui)
+file(GLOB IMGUI_SOURCES ${IMGUI_PATH}/*.cpp) 
+add_library("ImGui" STATIC ${IMGUI_SOURCES})
+target_include_directories("ImGui" PUBLIC ${IMGUI_PATH})
+
 # Link SDL2
 target_link_libraries(main ${SDL2_LIBRARIES})
