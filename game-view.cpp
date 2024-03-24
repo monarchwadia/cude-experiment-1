@@ -5,6 +5,7 @@
 #include <SDL2/SDL.h>
 #include "./imgui/imgui.h"
 #include "./imgui/backends/imgui_impl_sdl2.h"
+#include "./imgui/backends/imgui_impl_sdlrenderer2.h"
 #include "models/game-board.cpp"
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
@@ -55,6 +56,7 @@ public:
         {
             SDL_Log("Failed to create renderer: %s", SDL_GetError());
             SDL_DestroyWindow(window);
+            ImGui_ImplSDLRenderer2_Shutdown();
             ImGui_ImplSDL2_Shutdown();
             ImGui::DestroyContext();
             SDL_Quit();
@@ -64,7 +66,7 @@ public:
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
         ImGui_ImplSDL2_InitForSDLRenderer(window, renderer);
-        ImGui_ImplSDL2_NewFrame();
+        ImGui_ImplSDLRenderer2_Init(renderer);
         ImGuiIO &io = ImGui::GetIO();
         io.Fonts->AddFontDefault();
         io.Fonts->Build();
@@ -74,37 +76,58 @@ public:
         return 1;
     }
 
+    bool processEvent(SDL_Event *event)
+    {
+        if (!isInitialized)
+        {
+            std::cerr << "SdlApp is not initialized. Call init() first before calling processEvent()." << std::endl;
+            return -1;
+        }
+        ImGui_ImplSDL2_ProcessEvent(event);
+        return 1;
+    }
+
     bool render(GameBoard *board)
     {
+        ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
         if (!isInitialized)
         {
             std::cerr << "SdlApp is not initialized. Call init() first before calling render()." << std::endl;
             return -1;
         }
+
+        ImGui_ImplSDLRenderer2_NewFrame();
+        ImGui_ImplSDL2_NewFrame();
         ImGui::NewFrame();
+
+        // bool show = true;
         ImGui::ShowDemoWindow();
 
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-        SDL_RenderClear(renderer);
+        // static float f = 0.0f;
+        // static int counter = 0;
 
-        for (int row = 0; row < board->height; row++)
-        {
-            for (int col = 0; col < board->width; col++)
-            {
-                float value = board->grid[row][col];
-                SDL_Rect rect = {col * 10, row * 10, 10, 10};
-                SDL_SetRenderDrawColor(renderer, 255 * value, 255 * value, 255 * value, 255);
-                SDL_RenderFillRect(renderer, &rect);
-            }
-        }
+        // ImGui::Begin("Hello, world!"); // Create a window called "Hello, world!" and append into it.
 
-        // SDL_Rect rect = {100, 100, 200, 150};
-        // SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-        // SDL_RenderFillRect(renderer, &rect);
+        // ImGui::Text("This is some useful text."); // Display some text (you can use a format strings too)
+        // ImGui::Checkbox("Demo Window", &show);    // Edit bools storing our window open/close state
+        // ImGui::Checkbox("Another Window", &show);
 
-        SDL_RenderPresent(renderer);
+        // ImGui::SliderFloat("float", &f, 0.0f, 1.0f);             // Edit 1 float using a slider from 0.0f to 1.0f
+        // ImGui::ColorEdit3("clear color", (float *)&clear_color); // Edit 3 floats representing a color
+
+        // if (ImGui::Button("Button")) // Buttons return true when clicked (most widgets return true when edited/activated)
+        //     counter++;
+        // ImGui::SameLine();
+        // ImGui::Text("counter = %d", counter);
+
+        // ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+        // ImGui::End();
 
         ImGui::Render();
+        SDL_SetRenderDrawColor(renderer, (Uint8)(clear_color.x * 255), (Uint8)(clear_color.y * 255), (Uint8)(clear_color.z * 255), (Uint8)(clear_color.w * 255));
+        SDL_RenderClear(renderer);
+        ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());
+        SDL_RenderPresent(renderer);
 
         return 1;
     }

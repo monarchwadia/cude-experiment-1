@@ -68,6 +68,8 @@ public:
                 {
                     running = false;
                 }
+
+                app->processEvent(&event);
             }
 
             update();
