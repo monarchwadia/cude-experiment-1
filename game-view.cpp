@@ -63,8 +63,11 @@ public:
 
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
-        ImGuiIO &io = ImGui::GetIO();
         ImGui_ImplSDL2_InitForSDLRenderer(window, renderer);
+        ImGui_ImplSDL2_NewFrame();
+        ImGuiIO &io = ImGui::GetIO();
+        io.Fonts->AddFontDefault();
+        io.Fonts->Build();
 
         isInitialized = true;
 
@@ -78,8 +81,6 @@ public:
             std::cerr << "SdlApp is not initialized. Call init() first before calling render()." << std::endl;
             return -1;
         }
-
-        ImGui_ImplSDL2_NewFrame();
         ImGui::NewFrame();
         ImGui::ShowDemoWindow();
 
