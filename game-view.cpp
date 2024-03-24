@@ -103,6 +103,33 @@ public:
         // bool show = true;
         ImGui::ShowDemoWindow();
 
+        ImGui::Begin("Hello, World!");
+        ImDrawList *draw_list = ImGui::GetWindowDrawList();
+        const ImVec2 origin = ImGui::GetCursorScreenPos();
+        const ImU32 CELL_COLOR = ImColor(ImVec4(0.0f, 1.0f, 0.4f, 1.0f));
+        const int CELL_ROUNDING = 255;
+        const int CELL_SPACING = 1;
+        const int CELL_SIZE = 3;
+        for (int row = 0; row < board->height; row++)
+        {
+            for (int col = 0; col < board->width; col++)
+            {
+                float topleft_x = origin.x + (col * CELL_SIZE) + (col * CELL_SPACING);
+                float topleft_y = origin.y + (row * CELL_SIZE) + (row * CELL_SPACING);
+                float bottomright_x = origin.x + (col + 1) * CELL_SIZE + (col * CELL_SPACING);
+                float bottomright_y = origin.y + (row + 1) * CELL_SIZE + (row * CELL_SPACING);
+                ImVec2 topleft = ImVec2(topleft_x, topleft_y);
+                ImVec2 bottomright = ImVec2(bottomright_x, bottomright_y);
+
+                draw_list->AddRectFilled(
+                    topleft,
+                    bottomright, CELL_COLOR, CELL_ROUNDING, 0);
+            }
+        }
+        // draw_list->AddRectFilled(ImVec2(0, 0), ImVec2(100, 100), IM_COL32(255, 0, 0, 255));
+
+        ImGui::End();
+
         // static float f = 0.0f;
         // static int counter = 0;
 

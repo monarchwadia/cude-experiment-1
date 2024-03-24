@@ -7,8 +7,8 @@
 #include "models/game-board.cpp"
 
 // Constants
-#define GRID_HEIGHT 2
-#define GRID_WIDTH 2
+#define GRID_HEIGHT 100
+#define GRID_WIDTH 100
 
 class GameManager
 {
