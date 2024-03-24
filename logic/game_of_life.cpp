@@ -1,4 +1,5 @@
 #include "logic_interface.cpp"
+#include <cstring>
 
 class GameOfLifeLogic : public LogicInterface
 {
@@ -10,10 +11,7 @@ public:
         for (int i = 0; i < board->height; i++)
         {
             tempBoard[i] = new float[board->width];
-            for (int j = 0; j < board->width; j++)
-            {
-                tempBoard[i][j] = board->grid[i][j];
-            }
+            std::memcpy(tempBoard[i], board->grid[i], board->width * sizeof(float));
         }
 
         for (int row = 0; row < board->height; row++)

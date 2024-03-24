@@ -21,7 +21,7 @@ int main()
 
     // glider pattern on gameboard
     // output the 3 topleft cells 0,0 0,1 and  1,0
-    std::cout << "DEBUG" << std::endl;
+    // std::cout << "DEBUG" << std::endl;
     // std::cout << gameBoard.grid[0][0] << std::endl;
     // std::cout << gameBoard.grid[0][1] << std::endl;
     // std::cout << gameBoard.grid[1][0] << std::endl;
