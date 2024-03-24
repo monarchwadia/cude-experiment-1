@@ -67,9 +67,6 @@ public:
         ImGui::CreateContext();
         ImGui_ImplSDL2_InitForSDLRenderer(window, renderer);
         ImGui_ImplSDLRenderer2_Init(renderer);
-        ImGuiIO &io = ImGui::GetIO();
-        io.Fonts->AddFontDefault();
-        io.Fonts->Build();
 
         isInitialized = true;
 
@@ -106,7 +103,6 @@ public:
         ImGui::Begin("Hello, World!");
         ImDrawList *draw_list = ImGui::GetWindowDrawList();
         const ImVec2 origin = ImGui::GetCursorScreenPos();
-        const ImU32 CELL_COLOR = ImColor(ImVec4(0.0f, 1.0f, 0.4f, 1.0f));
         const int CELL_ROUNDING = 255;
         const int CELL_SPACING = 1;
         const int CELL_SIZE = 3;
@@ -121,9 +117,11 @@ public:
                 ImVec2 topleft = ImVec2(topleft_x, topleft_y);
                 ImVec2 bottomright = ImVec2(bottomright_x, bottomright_y);
 
+                float val = board->grid[row][col];
+                const ImU32 cellColor = ImColor(ImVec4(val, val, val, val));
                 draw_list->AddRectFilled(
                     topleft,
-                    bottomright, CELL_COLOR, CELL_ROUNDING, 0);
+                    bottomright, cellColor, CELL_ROUNDING, 0);
             }
         }
         // draw_list->AddRectFilled(ImVec2(0, 0), ImVec2(100, 100), IM_COL32(255, 0, 0, 255));

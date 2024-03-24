@@ -5,6 +5,7 @@
 #include <SDL2/SDL.h>
 #include "game-view.cpp"
 #include "models/game-board.cpp"
+#include "logic/logic_interface.cpp"
 
 // Constants
 #define GRID_HEIGHT 100
@@ -14,40 +15,17 @@ class GameManager
 {
 
 public:
-    GameBoard *board = new GameBoard(GRID_HEIGHT, GRID_WIDTH);
+    GameBoard *board;
     GameView *app;
+    LogicInterface *logic;
 
 public:
-    GameManager(GameView *_app)
-    {
-        app = _app;
-        for (int row = 0; row < GRID_HEIGHT; row++)
-        {
-            for (int col = 0; col < GRID_WIDTH; col++)
-            {
-                board->grid[row][col] = (float)(row + col);
-            }
-        }
-    }
+    GameManager(GameView *_app, LogicInterface *_logic, GameBoard *board) : app(_app), logic(_logic), board(board) {}
     ~GameManager() = default;
 
     int update()
     {
-        for (int row = 0; row < GRID_HEIGHT; row++)
-        {
-            for (int col = 0; col < GRID_WIDTH; col++)
-            {
-                if (board->grid[row][col] >= 1.0)
-                {
-                    board->grid[row][col] = 0.0;
-                }
-                else
-                {
-                    board->grid[row][col] += 0.001;
-                }
-            }
-        }
-        return 0;
+        return logic->calculate(board);
     }
 
     bool loop()
