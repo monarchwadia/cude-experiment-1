@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <SDL2/SDL.h>
+#include "./imgui/imgui.h"
+#include "./imgui/backends/imgui_impl_sdl2.h"
 #include "models/game-board.cpp"
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
@@ -53,9 +55,16 @@ public:
         {
             SDL_Log("Failed to create renderer: %s", SDL_GetError());
             SDL_DestroyWindow(window);
+            ImGui_ImplSDL2_Shutdown();
+            ImGui::DestroyContext();
             SDL_Quit();
             return -1;
         }
+
+        IMGUI_CHECKVERSION();
+        ImGui::CreateContext();
+        ImGuiIO &io = ImGui::GetIO();
+        ImGui_ImplSDL2_InitForSDLRenderer(window, renderer);
 
         isInitialized = true;
 
@@ -69,6 +78,10 @@ public:
             std::cerr << "SdlApp is not initialized. Call init() first before calling render()." << std::endl;
             return -1;
         }
+
+        ImGui_ImplSDL2_NewFrame();
+        ImGui::NewFrame();
+        ImGui::ShowDemoWindow();
 
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer);
@@ -89,6 +102,8 @@ public:
         // SDL_RenderFillRect(renderer, &rect);
 
         SDL_RenderPresent(renderer);
+
+        ImGui::Render();
 
         return 1;
     }
