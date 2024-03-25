@@ -22,6 +22,7 @@ int main()
     // FallingSandLogic logic = FallingSandLogic();
     NebulaLogic logic = NebulaLogic();
     GameBoard gameBoard = GameBoard(GRID_HEIGHT, GRID_WIDTH);
+    gameBoard.randomize();
 
     // glider pattern on gameboard
     // output the 3 topleft cells 0,0 0,1 and  1,0
@@ -31,11 +32,11 @@ int main()
     // std::cout << gameBoard.grid[1][0] << std::endl;
     // std::cout << gameBoard.grid[1][1] << std::endl;
 
-    gameBoard.grid[10][11] = 1.0f;
-    gameBoard.grid[11][12] = 1.0f;
-    gameBoard.grid[12][10] = 1.0f;
-    gameBoard.grid[12][11] = 1.0f;
-    gameBoard.grid[12][12] = 1.0f;
+    // gameBoard.grid[10][11] = 1.0f;
+    // gameBoard.grid[11][12] = 1.0f;
+    // gameBoard.grid[12][10] = 1.0f;
+    // gameBoard.grid[12][11] = 1.0f;
+    // gameBoard.grid[12][12] = 1.0f;
 
     GameManager gameManager = GameManager(&gameView, &logic, &gameBoard);
     gameManager.loop();

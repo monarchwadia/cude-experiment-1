@@ -118,7 +118,9 @@ public:
                 ImVec2 bottomright = ImVec2(bottomright_x, bottomright_y);
 
                 float val = board->grid[row][col];
+                // const ImU32 cellColor = ImColor(ImVec4(val / 0.8, val / 0.8, val / 0.8, 1));
                 const ImU32 cellColor = ImColor(ImVec4(val, val, val, val));
+
                 draw_list->AddRectFilled(
                     topleft,
                     bottomright, cellColor, CELL_ROUNDING, 0);

@@ -78,7 +78,7 @@ public:
         }
     }
 
-    void iterateWithNeighbours(std::function<float(int, int, float, std::vector<Cell>)> func)
+    void iterateWithNeighbours(std::function<float(int, int, float, std::vector<Cell>)> func, int radius = 1)
     {
         for (int i = 0; i < height; i++)
         {
@@ -86,10 +86,14 @@ public:
             {
                 std::vector<Cell> neighbours = std::vector<Cell>();
 
-                for (int k = -1; k <= 1; k++)
+                for (int k = -radius; k <= radius; k++)
                 {
-                    for (int l = -1; l <= 1; l++)
+                    for (int l = -radius; l <= radius; l++)
                     {
+                        if (k == 0 && l == 0)
+                        {
+                            continue;
+                        }
                         int r = i + k;
                         int c = j + l;
                         if (r >= 0 && r < height && c >= 0 && c < width)
