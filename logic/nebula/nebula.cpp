@@ -9,7 +9,7 @@ public:
         // Temporary board to store the next state
         GameBoard tempBoard = GameBoard(board->height, board->width);
 
-        board->iterateWithNeighbours([tempBoard](int row, int col, float value, std::vector<Cell> neighbours)
+        board->iterateWithNeighbours([&tempBoard](int row, int col, float value, std::vector<Cell> neighbours)
                                      {
             float sum = 0.0f;
 
