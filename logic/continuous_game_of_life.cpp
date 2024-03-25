@@ -1,7 +1,7 @@
-#include "../logic_interface.cpp"
+#include "logic_interface.cpp"
 #include <cstring>
 
-class NebulaLogic : public LogicInterface
+class ContinuousGameOfLifeLogic : public LogicInterface
 {
 public:
     int calculate(GameBoard *board)

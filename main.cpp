@@ -8,7 +8,7 @@
 #include "game-manager.cpp"
 #include "logic/game_of_life.cpp"
 #include "logic/falling_sand.cpp"
-#include "logic/nebula/nebula.cpp"
+#include "logic/continuous_game_of_life.cpp"
 
 int main()
 {
@@ -20,7 +20,7 @@ int main()
 
     // GameOfLifeLogic logic = GameOfLifeLogic();
     // FallingSandLogic logic = FallingSandLogic();
-    NebulaLogic logic = NebulaLogic();
+    ContinuousGameOfLifeLogic logic = ContinuousGameOfLifeLogic();
     GameBoard gameBoard = GameBoard(GRID_HEIGHT, GRID_WIDTH);
     gameBoard.randomize();
 
