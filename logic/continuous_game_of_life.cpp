@@ -21,7 +21,7 @@ public:
             }
 
             const float INCREASE_SPEED = 0.05f;
-            const float DECREASE_SPEED = 0.05f;
+            const float DECREASE_SPEED = 0.001f;
 
             const float LOWER_THRESHOLD = 0.4f;
             const float MIDDLE_THRESHOLD = 0.7f;
@@ -43,7 +43,30 @@ public:
 
             if (sum >= UPPER_THRESHOLD)
             {
-                tempBoard.grid[row][col] -= DECREASE_SPEED;
+                // random displacement of -2, -1, 0, 1, or 2
+                int displacement_x = rand() % 5 - 2;
+                int displacement_y = rand() % 5 - 2;
+                // min xy and max xy cannot exceed the grid size
+                int target_x = row + displacement_x;
+                if (target_x < 0) {
+                    target_x = 0;
+                }
+                else if (target_x >= tempBoard.height) {
+                    target_x = tempBoard.height - 1;
+                }
+
+
+                int target_y = col + displacement_y;
+                if (target_y < 0) {
+                    target_y = 0;
+                }
+                else if (target_y >= tempBoard.width) {
+                    target_y = tempBoard.width - 1;
+                }
+
+                float val = tempBoard.grid[row][col];
+                tempBoard.grid[target_x][target_y] += val - DECREASE_SPEED;
+                tempBoard.grid[row][col] = 0.0f;
             }
 
             // minmax between 0.0 and 1.0
